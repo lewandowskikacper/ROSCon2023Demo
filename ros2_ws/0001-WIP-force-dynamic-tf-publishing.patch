@@ -1,0 +1,59 @@
+From 750830ef5e707d24533840827e4f430230ddaf83 Mon Sep 17 00:00:00 2001
+From: Kacper Lewandowski <kacper.lewandowski@robotec.ai>
+Date: Mon, 31 Jul 2023 11:18:47 +0200
+Subject: [PATCH] WIP: force dynamic tf publishing
+
+Signed-off-by: Kacper Lewandowski <kacper.lewandowski@robotec.ai>
+---
+ Gems/ROS2/Code/Include/ROS2/Frame/ROS2FrameComponent.h | 1 +
+ Gems/ROS2/Code/Source/Frame/ROS2FrameComponent.cpp     | 8 +++++---
+ 2 files changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/Gems/ROS2/Code/Include/ROS2/Frame/ROS2FrameComponent.h b/Gems/ROS2/Code/Include/ROS2/Frame/ROS2FrameComponent.h
+index fdcfb9dee5..a1f6ed8e7f 100644
+--- a/Gems/ROS2/Code/Include/ROS2/Frame/ROS2FrameComponent.h
++++ b/Gems/ROS2/Code/Include/ROS2/Frame/ROS2FrameComponent.h
+@@ -98,6 +98,7 @@ namespace ROS2
+         AZStd::string m_jointNameString;
+ 
+         bool m_publishTransform = true;
++        bool m_forceDynamicUpdate = false;
+         bool m_isDynamic = false;
+         AZStd::unique_ptr<ROS2Transform> m_ros2Transform;
+     };
+diff --git a/Gems/ROS2/Code/Source/Frame/ROS2FrameComponent.cpp b/Gems/ROS2/Code/Source/Frame/ROS2FrameComponent.cpp
+index 494b4f2ad2..551917996a 100644
+--- a/Gems/ROS2/Code/Source/Frame/ROS2FrameComponent.cpp
++++ b/Gems/ROS2/Code/Source/Frame/ROS2FrameComponent.cpp
+@@ -94,7 +94,7 @@ namespace ROS2
+                     m_entity, AZ::Uuid("{02E6C633-8F44-4CEE-AE94-DCB06DE36422}")); // Physx::FixedJointComponent
+                 const bool hasArticulations = Internal::CheckIfEntityHasComponentOfType(
+                     m_entity, AZ::Uuid("{48751E98-B35F-4A2F-A908-D9CDD5230264}")); // Physx::ArticulationComponent
+-                m_isDynamic = (hasJoints && !hasFixedJoints) || hasArticulations;
++                m_isDynamic = (hasJoints && !hasFixedJoints) || hasArticulations || m_forceDynamicUpdate;
+             }
+ 
+             AZ_TracePrintf(
+@@ -221,7 +221,8 @@ namespace ROS2
+                 ->Field("Namespace Configuration", &ROS2FrameComponent::m_namespaceConfiguration)
+                 ->Field("Frame Name", &ROS2FrameComponent::m_frameName)
+                 ->Field("Joint Name", &ROS2FrameComponent::m_jointNameString)
+-                ->Field("Publish Transform", &ROS2FrameComponent::m_publishTransform);
++                ->Field("Publish Transform", &ROS2FrameComponent::m_publishTransform)
++                ->Field("Force Dynamic", &ROS2FrameComponent::m_forceDynamicUpdate);
+ 
+             if (AZ::EditContext* ec = serialize->GetEditContext())
+             {
+@@ -237,7 +238,8 @@ namespace ROS2
+                     ->DataElement(AZ::Edit::UIHandlers::Default, &ROS2FrameComponent::m_frameName, "Frame Name", "Frame Name")
+                     ->DataElement(AZ::Edit::UIHandlers::Default, &ROS2FrameComponent::m_jointNameString, "Joint Name", "Joint Name")
+                     ->DataElement(
+-                        AZ::Edit::UIHandlers::Default, &ROS2FrameComponent::m_publishTransform, "Publish Transform", "Publish Transform");
++                        AZ::Edit::UIHandlers::Default, &ROS2FrameComponent::m_publishTransform, "Publish Transform", "Publish Transform")
++                    ->DataElement(AZ::Edit::UIHandlers::Default, &ROS2FrameComponent::m_forceDynamicUpdate, "Force Dynamic Transform", "force dynamic transform publication");
+             }
+         }
+     }
+-- 
+2.34.1
+
