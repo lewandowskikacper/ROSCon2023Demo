@@ -24,7 +24,9 @@
                     "Instance_[91229694709886]/ContainerEntity",
                     "Instance_[91259759480958]/ContainerEntity",
                     "Instance_[91285529284734]/ContainerEntity",
-                    "Entity_[53787694630410]"
+                    "Entity_[53787694630410]",
+                    "Instance_[92882355952929]/ContainerEntity",
+                    "Entity_[92895240854817]"
                 ]
             },
             "Component_[15230859088967841193]": {
@@ -105,14 +107,14 @@
                     "Parent Entity": "Entity_[1146574390643]",
                     "Transform Data": {
                         "Translate": [
-                            -6.631417751312256,
-                            8.647847175598145,
+                            -5.550987720489502,
+                            9.478907585144043,
                             0.0
                         ],
                         "Rotate": [
                             0.0,
                             0.0,
-                            -89.99994659423828
+                            -62.022552490234375
                         ]
                     }
                 }
@@ -3483,7 +3485,7 @@
         },
         "Entity_[53787694630410]": {
             "Id": "Entity_[53787694630410]",
-            "Name": "Entity1",
+            "Name": "Spline1",
             "Components": {
                 "EditorDisabledCompositionComponent": {
                     "$type": "EditorDisabledCompositionComponent",
@@ -3891,7 +3893,275 @@
                     "Id": 10767995839792615241,
                     "m_template": {
                         "$type": "VelocitySplinePublisher",
-                        "CrossTrackFactor": 5.0,
+                        "AngularSpeedFactor": 1.0,
+                        "CrossTrackFactor": 1.0,
+                        "cmdTopic": {
+                            "Topic": "base_link/cmd_vel"
+                        },
+                        "RobotBaselink": "Entity_[103968871865127]"
+                    }
+                }
+            }
+        },
+        "Entity_[92895240854817]": {
+            "Id": "Entity_[92895240854817]",
+            "Name": "Entity1",
+            "Components": {
+                "EditorDisabledCompositionComponent": {
+                    "$type": "EditorDisabledCompositionComponent",
+                    "Id": 17270008612080881292
+                },
+                "EditorEntityIconComponent": {
+                    "$type": "EditorEntityIconComponent",
+                    "Id": 13734722927578585029
+                },
+                "EditorEntitySortComponent": {
+                    "$type": "EditorEntitySortComponent",
+                    "Id": 18259601198608979027
+                },
+                "EditorInspectorComponent": {
+                    "$type": "EditorInspectorComponent",
+                    "Id": 13752854646182355998
+                },
+                "EditorLockComponent": {
+                    "$type": "EditorLockComponent",
+                    "Id": 5239481817185204288
+                },
+                "EditorOnlyEntityComponent": {
+                    "$type": "EditorOnlyEntityComponent",
+                    "Id": 17376171649031986223
+                },
+                "EditorPendingCompositionComponent": {
+                    "$type": "EditorPendingCompositionComponent",
+                    "Id": 15216281277156700596
+                },
+                "EditorSplineComponent": {
+                    "$type": "EditorSplineComponent",
+                    "Id": 9275617420490253656,
+                    "Configuration": {
+                        "Spline Type": 2612576363626472641,
+                        "Spline": {
+                            "$type": "BezierSpline",
+                            "Vertices": {
+                                "Vertices": [
+                                    [
+                                        -2.0005531311035156,
+                                        -6.178274631500244,
+                                        0.0
+                                    ],
+                                    [
+                                        -1.8815748691558838,
+                                        -3.2845003604888916,
+                                        0.0
+                                    ],
+                                    [
+                                        -1.339948296546936,
+                                        -1.1069972515106201,
+                                        0.0
+                                    ],
+                                    [
+                                        -0.6929915547370911,
+                                        -0.02417776733636856,
+                                        0.0
+                                    ],
+                                    [
+                                        0.7792650461196899,
+                                        0.03296017646789551,
+                                        0.0
+                                    ],
+                                    [
+                                        2.0135631561279297,
+                                        -0.056855201721191406,
+                                        0.0
+                                    ],
+                                    [
+                                        3.5951709747314453,
+                                        -0.1779995709657669,
+                                        0.0
+                                    ],
+                                    [
+                                        4.603173732757568,
+                                        -0.9383666515350342,
+                                        0.0
+                                    ],
+                                    [
+                                        5.117859840393066,
+                                        -2.873932361602783,
+                                        0.0
+                                    ],
+                                    [
+                                        5.086716651916504,
+                                        -4.370999336242676,
+                                        0.0
+                                    ],
+                                    [
+                                        5.149945259094238,
+                                        -5.926765441894531,
+                                        0.0
+                                    ]
+                                ]
+                            },
+                            "Bezier Data": [
+                                {
+                                    "Forward": [
+                                        -2.0034077167510986,
+                                        -5.212872505187988,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -2.0005531311035156,
+                                        -6.178274631500244,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -1.7849600315093994,
+                                        -2.5428154468536377,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -2.0062789916992188,
+                                        -4.241818904876709,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -1.1959381103515625,
+                                        -0.7119725942611694,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -1.5961285829544067,
+                                        -1.8097081184387207,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -0.2604745924472809,
+                                        0.20847976207733154,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -1.0632755756378174,
+                                        -0.22335919737815857,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        1.1917555332183838,
+                                        0.02797999605536461,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        0.2881791889667511,
+                                        0.03888927400112152,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        2.54083251953125,
+                                        -0.09635672718286514,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        1.6021955013275146,
+                                        -0.026036692783236504,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        3.993595600128174,
+                                        -0.3136245608329773,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        3.0946292877197266,
+                                        -0.007613658905029297,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        4.9314961433410645,
+                                        -1.5196638107299805,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        4.3961920738220215,
+                                        -0.5719038844108582,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        5.187483310699463,
+                                        -3.368182897567749,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        5.024735450744629,
+                                        -2.2128500938415527,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        5.0921711921691895,
+                                        -4.889987468719482,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        5.081470966339111,
+                                        -3.871896743774414,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        5.149945259094238,
+                                        -5.926765441894531,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        5.121068000793457,
+                                        -5.408552646636963,
+                                        0.0
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "EditorVisibilityComponent": {
+                    "$type": "EditorVisibilityComponent",
+                    "Id": 2992094266457655669
+                },
+                "TransformComponent": {
+                    "$type": "{27F1E1A1-8D9D-4C3B-BD3A-AFB9762449C0} TransformComponent",
+                    "Id": 15706626673670276653,
+                    "Parent Entity": "Entity_[1146574390643]",
+                    "Transform Data": {
+                        "Translate": [
+                            2.0485830307006836,
+                            5.296388149261475,
+                            0.10656332969665527
+                        ]
+                    }
+                },
+                "VelocitySplinePublisher": {
+                    "$type": "GenericComponentWrapper",
+                    "Id": 5302890359974844795,
+                    "m_template": {
+                        "$type": "VelocitySplinePublisher",
+                        "LinearSpeedFactor": -0.5,
+                        "AngularSpeedFactor": 1.0,
+                        "CrossTrackFactor": 1.0,
                         "cmdTopic": {
                             "Topic": "base_link/cmd_vel"
                         },
@@ -4701,7 +4971,37 @@
                 {
                     "op": "replace",
                     "path": "/ContainerEntity/Components/TransformComponent/Transform Data/Translate/0",
-                    "value": 10.072031021118164
+                    "value": 18.539718627929688
+                }
+            ]
+        },
+        "Instance_[92882355952929]": {
+            "Source": "Prefabs/OTTO1500_Stand/StandHigh.prefab",
+            "Patches": [
+                {
+                    "op": "replace",
+                    "path": "/Entities/Entity_[420182842887]/Components/AZ::Render::EditorMeshComponent/Controller/Configuration/ModelAsset/assetHint",
+                    "value": "prefabs/otto1500_stand/standhigh.fbx.azmodel"
+                },
+                {
+                    "op": "replace",
+                    "path": "/Entities/Entity_[420182842887]/Components/EditorMeshColliderComponent/ShapeConfiguration/PhysicsAsset/Asset/assetHint",
+                    "value": "prefabs/otto1500_stand/standhigh.fbx.pxmesh"
+                },
+                {
+                    "op": "replace",
+                    "path": "/Entities/Entity_[420182842887]/Components/EditorMeshColliderComponent/ShapeConfiguration/PhysicsAsset/Configuration/PhysicsAsset/assetHint",
+                    "value": "prefabs/otto1500_stand/standhigh.fbx.pxmesh"
+                },
+                {
+                    "op": "replace",
+                    "path": "/ContainerEntity/Components/TransformComponent/Parent Entity",
+                    "value": "../Entity_[1146574390643]"
+                },
+                {
+                    "op": "replace",
+                    "path": "/ContainerEntity/Components/TransformComponent/Transform Data/Translate/0",
+                    "value": 6.931595325469971
                 }
             ]
         }
