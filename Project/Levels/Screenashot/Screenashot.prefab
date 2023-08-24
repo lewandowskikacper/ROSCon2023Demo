@@ -26,7 +26,8 @@
                     "Instance_[91285529284734]/ContainerEntity",
                     "Entity_[53787694630410]",
                     "Instance_[92882355952929]/ContainerEntity",
-                    "Entity_[92895240854817]"
+                    "Entity_[92895240854817]",
+                    "Entity_[162586194020474]"
                 ]
             },
             "Component_[15230859088967841193]": {
@@ -107,14 +108,14 @@
                     "Parent Entity": "Entity_[1146574390643]",
                     "Transform Data": {
                         "Translate": [
-                            -5.550987720489502,
-                            9.478907585144043,
+                            -2.346454381942749,
+                            4.84588623046875,
                             0.0
                         ],
                         "Rotate": [
                             0.0,
                             0.0,
-                            -62.022552490234375
+                            179.77011108398438
                         ]
                     }
                 }
@@ -3483,9 +3484,275 @@
                 }
             }
         },
+        "Entity_[162586194020474]": {
+            "Id": "Entity_[162586194020474]",
+            "Name": "Spline Finish",
+            "Components": {
+                "EditorDisabledCompositionComponent": {
+                    "$type": "EditorDisabledCompositionComponent",
+                    "Id": 15706594466144788867
+                },
+                "EditorEntityIconComponent": {
+                    "$type": "EditorEntityIconComponent",
+                    "Id": 17606970162185542336
+                },
+                "EditorEntitySortComponent": {
+                    "$type": "EditorEntitySortComponent",
+                    "Id": 10811858657285043832
+                },
+                "EditorInspectorComponent": {
+                    "$type": "EditorInspectorComponent",
+                    "Id": 13213023281421567325
+                },
+                "EditorLockComponent": {
+                    "$type": "EditorLockComponent",
+                    "Id": 13803259975170393147
+                },
+                "EditorOnlyEntityComponent": {
+                    "$type": "EditorOnlyEntityComponent",
+                    "Id": 13463513854442924647
+                },
+                "EditorPendingCompositionComponent": {
+                    "$type": "EditorPendingCompositionComponent",
+                    "Id": 195638213244672737
+                },
+                "EditorSplineComponent": {
+                    "$type": "EditorSplineComponent",
+                    "Id": 1733295902771562221,
+                    "Configuration": {
+                        "Spline Type": 2612576363626472641,
+                        "Spline": {
+                            "$type": "BezierSpline",
+                            "Vertices": {
+                                "Vertices": [
+                                    [
+                                        -2.0005531311035156,
+                                        -6.178274631500244,
+                                        0.0
+                                    ],
+                                    [
+                                        -1.8815748691558838,
+                                        -3.2845003604888916,
+                                        0.0
+                                    ],
+                                    [
+                                        -1.339948296546936,
+                                        -1.1069972515106201,
+                                        0.0
+                                    ],
+                                    [
+                                        -0.6929916143417358,
+                                        -0.024177800863981247,
+                                        0.0
+                                    ],
+                                    [
+                                        0.7792649865150452,
+                                        0.0329601988196373,
+                                        0.0
+                                    ],
+                                    [
+                                        2.0135631561279297,
+                                        -0.056855201721191406,
+                                        0.0
+                                    ],
+                                    [
+                                        3.5951709747314453,
+                                        -0.1779996007680893,
+                                        0.0
+                                    ],
+                                    [
+                                        4.603173732757568,
+                                        -0.938366711139679,
+                                        0.0
+                                    ],
+                                    [
+                                        4.950249671936035,
+                                        -2.8752520084381104,
+                                        0.0
+                                    ],
+                                    [
+                                        4.882209300994873,
+                                        -4.384340286254883,
+                                        0.0
+                                    ],
+                                    [
+                                        4.887039661407471,
+                                        -5.984134197235107,
+                                        0.0
+                                    ]
+                                ]
+                            },
+                            "Bezier Data": [
+                                {
+                                    "Forward": [
+                                        -2.0034077167510986,
+                                        -5.212872505187988,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -2.0005531311035156,
+                                        -6.178274631500244,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -1.7849600315093994,
+                                        -2.5428154468536377,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -2.0062789916992188,
+                                        -4.241818904876709,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -1.1959381103515625,
+                                        -0.7119725942611694,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -1.5961285829544067,
+                                        -1.8097081184387207,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        -0.2604745924472809,
+                                        0.20847980678081512,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        -1.0632755756378174,
+                                        -0.22335919737815857,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        1.1917555332183838,
+                                        0.027979999780654907,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        0.2881791889667511,
+                                        0.03888930007815361,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        2.54083251953125,
+                                        -0.09635669738054276,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        1.6021955013275146,
+                                        -0.0260367002338171,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        3.993595600128174,
+                                        -0.3136245906352997,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        3.0946292877197266,
+                                        -0.00761369988322258,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        4.897627830505371,
+                                        -1.524470329284668,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        4.414233207702637,
+                                        -0.562284529209137,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        4.9908905029296875,
+                                        -3.3771495819091797,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        4.897310733795166,
+                                        -2.221479654312134,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        4.871368885040283,
+                                        -4.917497158050537,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        4.892445087432861,
+                                        -3.880903959274292,
+                                        0.0
+                                    ]
+                                },
+                                {
+                                    "Forward": [
+                                        4.887039661407471,
+                                        -5.984134197235107,
+                                        0.0
+                                    ],
+                                    "Back": [
+                                        4.879205703735352,
+                                        -5.450924873352051,
+                                        0.0
+                                    ]
+                                }
+                            ]
+                        }
+                    }
+                },
+                "EditorVisibilityComponent": {
+                    "$type": "EditorVisibilityComponent",
+                    "Id": 16260798634060947557
+                },
+                "TransformComponent": {
+                    "$type": "{27F1E1A1-8D9D-4C3B-BD3A-AFB9762449C0} TransformComponent",
+                    "Id": 1095314221569068414,
+                    "Parent Entity": "Entity_[1146574390643]",
+                    "Transform Data": {
+                        "Translate": [
+                            8.913956642150879,
+                            5.3884968757629395,
+                            0.056093692779541016
+                        ]
+                    }
+                },
+                "VelocitySplinePublisher": {
+                    "$type": "GenericComponentWrapper",
+                    "Id": 6859417941526938249,
+                    "m_template": {
+                        "$type": "VelocitySplinePublisher",
+                        "AngularSpeedFactor": 1.0,
+                        "CrossTrackFactor": 1.0,
+                        "cmdTopic": {
+                            "Topic": "base_link/cmd_vel"
+                        },
+                        "RobotBaselink": "Entity_[103968871865127]"
+                    }
+                }
+            }
+        },
         "Entity_[53787694630410]": {
             "Id": "Entity_[53787694630410]",
-            "Name": "Spline1",
+            "Name": "Spline Pickup",
             "Components": {
                 "EditorDisabledCompositionComponent": {
                     "$type": "EditorDisabledCompositionComponent",
@@ -3905,7 +4172,7 @@
         },
         "Entity_[92895240854817]": {
             "Id": "Entity_[92895240854817]",
-            "Name": "Entity1",
+            "Name": "Splne Transport",
             "Components": {
                 "EditorDisabledCompositionComponent": {
                     "$type": "EditorDisabledCompositionComponent",
@@ -3985,18 +4252,18 @@
                                         0.0
                                     ],
                                     [
-                                        5.117859840393066,
-                                        -2.873932361602783,
+                                        4.950249671936035,
+                                        -2.8752520084381104,
                                         0.0
                                     ],
                                     [
-                                        5.086716651916504,
-                                        -4.370999336242676,
+                                        4.882209300994873,
+                                        -4.384340286254883,
                                         0.0
                                     ],
                                     [
-                                        5.149945259094238,
-                                        -5.926765441894531,
+                                        4.887039661407471,
+                                        -5.984134197235107,
                                         0.0
                                     ]
                                 ]
@@ -4088,49 +4355,49 @@
                                 },
                                 {
                                     "Forward": [
-                                        4.9314961433410645,
-                                        -1.5196638107299805,
+                                        4.897627830505371,
+                                        -1.524470329284668,
                                         0.0
                                     ],
                                     "Back": [
-                                        4.3961920738220215,
-                                        -0.5719038844108582,
+                                        4.414233207702637,
+                                        -0.5622844696044922,
                                         0.0
                                     ]
                                 },
                                 {
                                     "Forward": [
-                                        5.187483310699463,
-                                        -3.368182897567749,
+                                        4.9908905029296875,
+                                        -3.3771495819091797,
                                         0.0
                                     ],
                                     "Back": [
-                                        5.024735450744629,
-                                        -2.2128500938415527,
+                                        4.897310733795166,
+                                        -2.221479654312134,
                                         0.0
                                     ]
                                 },
                                 {
                                     "Forward": [
-                                        5.0921711921691895,
-                                        -4.889987468719482,
+                                        4.871368885040283,
+                                        -4.917497158050537,
                                         0.0
                                     ],
                                     "Back": [
-                                        5.081470966339111,
-                                        -3.871896743774414,
+                                        4.892445087432861,
+                                        -3.880903959274292,
                                         0.0
                                     ]
                                 },
                                 {
                                     "Forward": [
-                                        5.149945259094238,
-                                        -5.926765441894531,
+                                        4.887039661407471,
+                                        -5.984134197235107,
                                         0.0
                                     ],
                                     "Back": [
-                                        5.121068000793457,
-                                        -5.408552646636963,
+                                        4.879205703735352,
+                                        -5.450924873352051,
                                         0.0
                                     ]
                                 }
@@ -4159,13 +4426,13 @@
                     "Id": 5302890359974844795,
                     "m_template": {
                         "$type": "VelocitySplinePublisher",
-                        "LinearSpeedFactor": -0.5,
                         "AngularSpeedFactor": 1.0,
                         "CrossTrackFactor": 1.0,
                         "cmdTopic": {
                             "Topic": "base_link/cmd_vel"
                         },
-                        "RobotBaselink": "Entity_[103968871865127]"
+                        "RobotBaselink": "Entity_[103968871865127]",
+                        "ReverseDirection": true
                     }
                 }
             }
@@ -4857,6 +5124,92 @@
                     "op": "replace",
                     "path": "/Instances/Instance_[375962764479556]/Entities/Entity_[375979944348740]/Components/Component_[3790789121538053334]/ShapeConfiguration/PhysicsAsset/Configuration/PhysicsAsset/assetHint",
                     "value": "assets/warehouse/models/warehouse_walls_front.fbx.pxmesh"
+                },
+                {
+                    "op": "replace",
+                    "path": "/Instances/Instance_[372307747310660]/Entities/Entity_[71229578283278]/Components/Component_[12475620659785731834]/DisabledComponents",
+                    "value": {
+                        "Component_[12442620377381822784]": {
+                            "$type": "AZ::Render::EditorDiffuseProbeGridComponent",
+                            "Id": 12442620377381822784,
+                            "Controller": {
+                                "Configuration": {
+                                    "ProbeSpacing": [
+                                        2.0,
+                                        2.0,
+                                        2.0
+                                    ],
+                                    "Extents": [
+                                        62.0,
+                                        22.0,
+                                        12.0
+                                    ],
+                                    "AmbientMultiplier": 0.10000000149011612,
+                                    "ViewBias": 0.6299999952316284,
+                                    "NormalBias": 0.09000000357627869,
+                                    "NumRaysPerProbe": 6,
+                                    "Scrolling": false,
+                                    "EdgeBlendIbl": true,
+                                    "FrameUpdateCount": 10,
+                                    "TransparencyMode": 1,
+                                    "EmissiveMultiplier": 1.0,
+                                    "EditorMode": 0,
+                                    "RuntimeMode": 0,
+                                    "BakedIrradianceTextureRelativePath": "",
+                                    "BakedDistanceTextureRelativePath": "",
+                                    "BakedProbeDataTextureRelativePath": "",
+                                    "BakedIrradianceTextureAsset": {
+                                        "assetId": {
+                                            "guid": "{00000000-0000-0000-0000-000000000000}",
+                                            "subId": 0
+                                        },
+                                        "loadBehavior": "QueueLoad",
+                                        "assetHint": ""
+                                    },
+                                    "BakedDistanceTextureAsset": {
+                                        "assetId": {
+                                            "guid": "{00000000-0000-0000-0000-000000000000}",
+                                            "subId": 0
+                                        },
+                                        "loadBehavior": "QueueLoad",
+                                        "assetHint": ""
+                                    },
+                                    "BakedProbeDataTextureAsset": {
+                                        "assetId": {
+                                            "guid": "{00000000-0000-0000-0000-000000000000}",
+                                            "subId": 0
+                                        },
+                                        "loadBehavior": "QueueLoad",
+                                        "assetHint": ""
+                                    },
+                                    "VisualizationEnabled": false,
+                                    "VisualizationShowInactiveProbes": true,
+                                    "VisualizationSphereRadius": 0.5
+                                }
+                            },
+                            "probeSpacingX": 2.0,
+                            "probeSpacingY": 2.0,
+                            "probeSpacingZ": 2.0,
+                            "ambientMultiplier": 0.10000000149011612,
+                            "viewBias": 0.6299999952316284,
+                            "normalBias": 0.09000000357627869,
+                            "numRaysPerProbe": 6,
+                            "scrolling": false,
+                            "edgeBlendIbl": true,
+                            "frameUpdateCount": 10,
+                            "transparencyMode": 1,
+                            "emissiveMultiplier": 1.0,
+                            "editorMode": 0,
+                            "runtimeMode": 0,
+                            "showVisualization": false,
+                            "showInactiveProbes": true,
+                            "visualizationSphereRadius": 0.5
+                        }
+                    }
+                },
+                {
+                    "op": "remove",
+                    "path": "/Instances/Instance_[372307747310660]/Entities/Entity_[71229578283278]/Components/Component_[12442620377381822784]"
                 }
             ]
         },
@@ -4900,23 +5253,38 @@
                 },
                 {
                     "op": "replace",
+                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Mass",
+                    "value": 1.0
+                },
+                {
+                    "op": "replace",
+                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/0",
+                    "value": 0.0
+                },
+                {
+                    "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/1",
-                    "value": -0.00029151514172554016
+                    "value": 0.0
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/2",
-                    "value": 0.05575583875179291
+                    "value": 0.0
+                },
+                {
+                    "op": "replace",
+                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/0",
+                    "value": 1.0
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/4",
-                    "value": 9.80550479888916
+                    "value": 1.0
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/8",
-                    "value": 14.414012908935547
+                    "value": 1.0
                 }
             ]
         },
