@@ -108,14 +108,14 @@
                     "Parent Entity": "Entity_[1146574390643]",
                     "Transform Data": {
                         "Translate": [
-                            -2.346454381942749,
-                            4.84588623046875,
+                            -6.39866828918457,
+                            8.889113426208496,
                             0.0
                         ],
                         "Rotate": [
                             0.0,
                             0.0,
-                            179.77011108398438
+                            -93.88555145263672
                         ]
                     }
                 }
@@ -5253,38 +5253,23 @@
                 },
                 {
                     "op": "replace",
-                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Mass",
-                    "value": 1.0
-                },
-                {
-                    "op": "replace",
-                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/0",
-                    "value": 0.0
-                },
-                {
-                    "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/1",
-                    "value": 0.0
+                    "value": -0.00029151514172554016
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Centre of mass offset/2",
-                    "value": 0.0
-                },
-                {
-                    "op": "replace",
-                    "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/0",
-                    "value": 1.0
+                    "value": 0.05575583875179291
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/4",
-                    "value": 1.0
+                    "value": 9.80550479888916
                 },
                 {
                     "op": "replace",
                     "path": "/Entities/Entity_[7675435439647121]/Components/EditorRigidBodyComponent/Configuration/Inertia tensor/8",
-                    "value": 1.0
+                    "value": 14.414012908935547
                 }
             ]
         },
