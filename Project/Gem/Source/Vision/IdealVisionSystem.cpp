@@ -24,6 +24,7 @@
 #include <ROS2/Sensor/ROS2SensorComponent.h>
 #include <ROS2/Utilities/ROS2Conversions.h>
 #include <ROS2/Utilities/ROS2Names.h>
+#include <ROS2/Frame/ROS2FrameComponent.h>
 
 namespace ROS2::Demo
 {
@@ -200,6 +201,11 @@ namespace ROS2::Demo
     void IdealVisionSystem::GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required)
     {
         required.push_back(AZ_CRC("ROS2CameraSensor"));
+    }
+
+    void IdealVisionSystem::GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided)
+    {
+        provided.push_back(AZ_CRC("IdealVisionSystem"));
     }
 
     AZStd::vector<AZ::Vector3> IdealVisionSystem::CreateFrustumLines(

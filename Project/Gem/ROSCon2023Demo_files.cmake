@@ -22,5 +22,7 @@ set(FILES
     Source/Vision/IdealVisionSystem.h
     Source/Vision/IdealVisionSystemConfiguration.cpp
     Source/Vision/IdealVisionSystemConfiguration.h
+    Source/Wrapper/WrapperComponent.cpp
+    Source/Wrapper/WrapperComponent.h
     enabled_gems.cmake
 )

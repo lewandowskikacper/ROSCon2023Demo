@@ -109,7 +109,7 @@
                                     "guid": "{EDD73FE5-D4E2-588A-8BE7-E4C60B5C3745}",
                                     "subId": 647865614
                                 },
-                                "assetHint": "assets/factory/conveyorline/europallet.pxmesh"
+                                "assetHint": "assets/factory/conveyorline/europallet.fbx.pxmesh"
                             },
                             "Configuration": {
                                 "PhysicsAsset": {
@@ -118,7 +118,7 @@
                                         "subId": 647865614
                                     },
                                     "loadBehavior": "QueueLoad",
-                                    "assetHint": "assets/factory/conveyorline/europallet.pxmesh"
+                                    "assetHint": "assets/factory/conveyorline/europallet.fbx.pxmesh"
                                 }
                             }
                         }

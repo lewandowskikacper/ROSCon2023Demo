@@ -24,4 +24,5 @@ set(ENABLED_GEMS
     WarehouseAssets
     ROS2
     PhysXDebug
+    EMotionFX
 )

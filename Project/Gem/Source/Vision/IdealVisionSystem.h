@@ -34,6 +34,7 @@ namespace ROS2::Demo
         IdealVisionSystem(const IdealVisionSystemConfiguration& configuration);
         ~IdealVisionSystem() = default;
         static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
+        static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
 
         // AZ::Component overrides...
         void Activate() override;

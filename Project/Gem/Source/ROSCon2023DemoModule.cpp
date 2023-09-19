@@ -10,6 +10,7 @@
 #include <HumanNpc/NavigationMeshOrchestratorComponent.h>
 #include <HumanNpc/NpcNavigatorComponent.h>
 #include <HumanNpc/WaypointComponent.h>
+#include <Wrapper/WrapperComponent.h>
 
 namespace ROSCon2023Demo
 {
@@ -34,6 +35,7 @@ namespace ROSCon2023Demo
                     ROS2::Demo::NpcNavigatorComponent::CreateDescriptor(),
                     ROS2::Demo::NavigationMeshOrchestratorComponent::CreateDescriptor(),
                     ROS2::Demo::WaypointComponent::CreateDescriptor(),
+                    ROS2::Demo::WrapperComponent::CreateDescriptor(),
                 });
         }
 
