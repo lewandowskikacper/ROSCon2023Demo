@@ -1,0 +1,447 @@
+#include <memory>
+
+#include <thread> 
+#include <chrono>
+#include <rclcpp/rclcpp.hpp>
+// #include <rcutils/logging.h>
+#include <control_msgs/action/gripper_command.hpp>
+#include <tf2_msgs/msg/tf_message.hpp>
+
+#include <moveit/move_group_interface/move_group_interface.h>
+#include <moveit_visual_tools/moveit_visual_tools.h>
+#include <moveit/planning_scene_interface/planning_scene_interface.h>
+
+
+#include <iostream>
+
+
+struct Transform {
+  double x = 0;
+  double y = 0;
+  double z = 0;
+} box_tf;
+
+
+ geometry_msgs::msg::Pose box_pose =  geometry_msgs::msg::Pose();
+
+
+void tf_callback(tf2_msgs::msg::TFMessage mess) {
+
+  for (auto tf : mess.transforms) 
+  {
+
+    if(tf.child_frame_id != "Box1/box")
+    {
+      continue;
+    }
+
+    box_pose.orientation = tf.transform.rotation; 
+    auto tr = tf.transform.translation;
+
+    box_pose.position.x = tr.x;
+    box_pose.position.y = tr.y;
+    box_pose.position.z = tr.z + 0.3641039 * 0.28449010848999023;
+
+
+    box_tf.x = tr.x;
+    box_tf.y = tr.y;
+    box_tf.z = tr.z + 0.3641039  * 0.28449010848999023;
+
+  }
+}
+
+
+
+bool SendGripperGrip(rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_ptr);
+
+
+bool SendGripperrelease(rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_ptr);
+
+int main(int argc, char * argv[])
+{
+  // Initialize ROS and create the Node
+  rclcpp::init(argc, argv);
+  auto const node = std::make_shared<rclcpp::Node>(
+    "hello_moveit",
+    rclcpp::NodeOptions().automatically_declare_parameters_from_overrides(true)
+  );
+
+  // Create a ROS logger
+  auto const logger = rclcpp::get_logger("ur_moveit_demo_prev");
+
+  // Spin up a SingleThreadedExecutor for MoveItVisualTools to interact with ROS
+  rclcpp::executors::SingleThreadedExecutor executor;
+  executor.add_node(node);
+  auto spinner = std::thread([&executor]() { executor.spin(); });
+
+
+  auto tf_subscribtion = node->create_subscription<tf2_msgs::msg::TFMessage>("/tf", 10, tf_callback) ;
+
+
+  // Create the MoveIt MoveGroup Interface
+  using moveit::planning_interface::MoveGroupInterface;
+  auto move_group_interface = MoveGroupInterface(node, "ur_manipulator");
+
+  // Construct and initialize MoveItVisualTools
+  auto moveit_visual_tools = moveit_visual_tools::MoveItVisualTools{
+      node, "base_link", rviz_visual_tools::RVIZ_MARKER_TOPIC,
+      move_group_interface.getRobotModel()};
+
+  moveit_visual_tools.deleteAllMarkers();
+  moveit_visual_tools.loadRemoteControl();
+
+
+  move_group_interface.setPlanningTime(10);
+  move_group_interface.setNumPlanningAttempts(10);
+  move_group_interface.setMaxVelocityScalingFactor(0.5);
+
+
+  // Create closures for visualization
+  auto const draw_title = [&moveit_visual_tools](auto text) {
+    auto const text_pose = [] {
+      auto msg = Eigen::Isometry3d::Identity();
+      msg.translation().z() = 1.0;  // Place text 1m above the base link
+      return msg;
+    }();
+    moveit_visual_tools.publishText(text_pose, text, rviz_visual_tools::WHITE,
+                                    rviz_visual_tools::XLARGE);
+  };
+  auto const prompt = [&moveit_visual_tools](auto text) {
+    moveit_visual_tools.prompt(text);
+  };
+  auto const draw_trajectory_tool_path =
+      [&moveit_visual_tools,
+      jmg = move_group_interface.getRobotModel()->getJointModelGroup(
+          "ur_manipulator")](auto const trajectory) {
+        moveit_visual_tools.publishTrajectoryLine(trajectory, jmg);
+      };
+
+
+
+  // I need to make sure, that position of the box is already known.
+  // For know, I just use sleep here.
+
+  using namespace std::chrono_literals;
+
+  std::this_thread::sleep_for(2000ms);
+
+  
+  std::cerr << "Box Pose: " << box_pose.position.x << ", " << box_pose.position.y << ", " << box_pose.position.z << "\n"; 
+
+
+  // Add box to the environment
+  auto const box_1 = [frame_id =
+                                  move_group_interface.getPlanningFrame(), &box_pose] {
+    moveit_msgs::msg::CollisionObject collision_object;
+    collision_object.header.frame_id = frame_id;
+    collision_object.id = "box1";
+    shape_msgs::msg::SolidPrimitive primitive;
+
+    // Define the size of the box in meters
+    primitive.type = primitive.BOX;
+    primitive.dimensions.resize(3);
+
+                    
+    primitive.dimensions[primitive.BOX_X] = 0.24811747670173645 * 1.0171222686767578;
+    primitive.dimensions[primitive.BOX_Y] = 0.42500990629196167 * 0.511430025100708;
+    primitive.dimensions[primitive.BOX_Z] = 0.28449010848999023 * 0.7279044985771179;
+
+    // box_pose is created from messages published to /tf
+    std::cerr << "Box Pose: " << box_pose.position.x << ", " << box_pose.position.y << ", " << box_pose.position.z << "\n"; 
+
+    collision_object.primitives.push_back(primitive);
+    collision_object.primitive_poses.push_back(box_pose);
+    collision_object.operation = collision_object.ADD;
+
+    return collision_object;
+  }();
+
+
+
+
+  // Set a target Pose
+  auto const target_pose = [] {
+    geometry_msgs::msg::Pose msg;
+    msg.orientation.x = 0.0;
+    msg.orientation.y = -0.707107;
+    msg.orientation.z = 0.0;
+    msg.orientation.w = 0.707107;
+
+    msg.position.x = box_tf.x;
+    msg.position.y = box_tf.y;
+    msg.position.z = box_tf.z + 0.20; // some distance is added - what exactly should it be?
+    return msg;
+  }();
+
+
+  move_group_interface.setEndEffectorLink("gripper_link");
+
+
+  std::cerr << "Goal Pose: " << target_pose.position.x << ", " << target_pose.position.y << ", " << target_pose.position.z << "\n"; 
+
+  move_group_interface.setPoseTarget(target_pose);
+
+
+  // This is the ground
+  auto const collision_object_1 = [frame_id =
+                                  move_group_interface.getPlanningFrame()] {
+    moveit_msgs::msg::CollisionObject collision_object;
+    collision_object.header.frame_id = frame_id;
+    collision_object.id = "ground1";
+    shape_msgs::msg::SolidPrimitive primitive;
+
+    // Define the size of the box in meters
+    primitive.type = primitive.BOX;
+    primitive.dimensions.resize(3);
+    primitive.dimensions[primitive.BOX_X] = 3.0;
+    primitive.dimensions[primitive.BOX_Y] = 3.0;
+    primitive.dimensions[primitive.BOX_Z] = 0.5;
+
+    // Define the pose of the box (relative to the frame_id)
+    geometry_msgs::msg::Pose box_pose;
+    box_pose.orientation.w = 1.0;
+    box_pose.position.x = 0.0;
+    box_pose.position.y = 0.0;
+    box_pose.position.z = -0.27;
+
+    collision_object.primitives.push_back(primitive);
+    collision_object.primitive_poses.push_back(box_pose);
+    collision_object.operation = collision_object.ADD;
+
+    return collision_object;
+  }();
+
+  // This is additional obstacle. For now disabled.
+
+  // auto const collision_object_2 = [frame_id =
+  //                                 move_group_interface.getPlanningFrame()] {
+  //   moveit_msgs::msg::CollisionObject collision_object;
+  //   collision_object.header.frame_id = frame_id;
+  //   collision_object.id = "obstacle2";
+  //   shape_msgs::msg::SolidPrimitive primitive;
+
+  //   // Define the size of the box in meters
+  //   primitive.type = primitive.BOX;
+  //   primitive.dimensions.resize(3);
+  //   primitive.dimensions[primitive.BOX_X] = 0.1;
+  //   primitive.dimensions[primitive.BOX_Y] = 0.1;
+  //   primitive.dimensions[primitive.BOX_Z] = 0.3;
+
+  //   // Define the pose of the box (relative to the frame_id)
+  //   geometry_msgs::msg::Pose box_pose;
+  //   box_pose.orientation.w = 1.0;  // We can leave out the x, y, and z components of the quaternion since they are initialized to 0
+  //   box_pose.position.x = 0.6;
+  //   box_pose.position.y = 0.0;
+  //   box_pose.position.z = 0.3;
+
+  //   collision_object.primitives.push_back(primitive);
+  //   collision_object.primitive_poses.push_back(box_pose);
+  //   collision_object.operation = collision_object.ADD;
+
+  //   return collision_object;
+  // }();
+
+  
+
+  moveit::planning_interface::PlanningSceneInterface planning_scene_interface;
+
+  planning_scene_interface.applyCollisionObjects({collision_object_1, box_1});
+
+
+  move_group_interface.setPlannerId("geometric::RRTConnect");
+
+
+
+  std::cerr << "getDefaultPlanningPipelineId: " << move_group_interface.getDefaultPlanningPipelineId() <<"\n";
+
+  std::cerr << "getDefaultPlannerId: " << move_group_interface.getDefaultPlannerId("ur_manipulator") <<"\n";
+
+
+  auto planner_id =move_group_interface.getDefaultPlannerId();
+
+
+  std::map<std::string, std::string> params;
+
+  // // params["enforce_constrained_state_space"] = "true";
+  // // params["projection_evaluator"]= "joints(shoulder_pan_joint,shoulder_lift_joint)";
+  // params["longest_valid_segment_fraction"]= "0.01";
+  // params["range"] = "0.0";
+  // params["type"] = "geometric::RRTConnect"; 
+  // params["optimization_objective"] = "PathLengthOptimizationObjective";
+
+  // move_group_interface.setPlannerParams("geometric::RRTConnect", "ur_manipulator", params);
+
+  for(auto [k, v]: move_group_interface.getPlannerParams("geometric::RRTConnect", "ur_manipulator")) {
+
+    std::cerr << k << " -> " << v << "\n";
+  }
+
+
+  std::cerr<<"\n\n";
+
+  std::cerr << "plannner id: " << move_group_interface.getPlannerId() << "\n";
+
+
+
+  // // Constraints
+  // // auto current_pose = move_group_interface.getCurrentPose();
+
+  // auto frame_id = move_group_interface.getPlanningFrame();
+  // std::cerr << "frame_id: " << frame_id << ", pose reference frame: " << move_group_interface.getPoseReferenceFrame() << "\n";
+
+  // moveit_msgs::msg::OrientationConstraint orientation_constraint;
+  // orientation_constraint.header.frame_id = move_group_interface.getPoseReferenceFrame();
+
+  // orientation_constraint.link_name = "shoulder_link"; //move_group_interface.getEndEffectorLink();
+
+  // // orientation_constraint.orientation = current_pose.pose.orientation;
+
+  // orientation_constraint.orientation.x = 0.0;
+  // orientation_constraint.orientation.y = -0.707107;
+  // orientation_constraint.orientation.z = 0.0;
+  // orientation_constraint.orientation.w = 0.707107;
+
+  // orientation_constraint.absolute_x_axis_tolerance = 10.0;
+  // orientation_constraint.absolute_y_axis_tolerance = 10.0;
+  // orientation_constraint.absolute_z_axis_tolerance = 10.0;
+  // orientation_constraint.weight = 1.0;
+
+  // moveit_msgs::msg::Constraints orientation_constraints;
+  // orientation_constraints.orientation_constraints.emplace_back(orientation_constraint);
+  // move_group_interface.setPathConstraints(orientation_constraints);
+
+
+  // Create a plan to that target pose
+  prompt("Press 'Next' in the RvizVisualToolsGui window to plan");
+  draw_title("Planning");
+  moveit_visual_tools.trigger();
+  auto const [success, plan] = [&move_group_interface] {
+    moveit::planning_interface::MoveGroupInterface::Plan msg;
+    auto const ok = static_cast<bool>(move_group_interface.plan(msg));
+    return std::make_pair(ok, msg);
+  }();
+
+  // Execute the plan
+  if (success) {
+    draw_trajectory_tool_path(plan.trajectory_);
+    moveit_visual_tools.trigger();
+    prompt("Press 'Next' in the RvizVisualToolsGui window to execute");
+    draw_title("Executing");
+    moveit_visual_tools.trigger();
+    move_group_interface.execute(plan);
+  } else {
+    draw_title("Planning Failed!");
+    moveit_visual_tools.trigger();
+    RCLCPP_ERROR(logger, "Planning failed!");
+    
+    rclcpp::shutdown();  // <--- This will cause the spin function in the thread to return
+    spinner.join();  // <--- Join the thread before exiting
+    return 0;
+  }
+
+
+  std::cerr << "plannner id: " << move_group_interface.getPlannerId() << "\n";
+
+
+  // Sending command to gripper.
+
+    auto client_ptr =  rclcpp_action::create_client<control_msgs::action::GripperCommand>(node, "/gripper_server");
+
+
+    if (!client_ptr->wait_for_action_server()) {
+        RCLCPP_ERROR(logger, "Gripper action server not available after waiting");
+        // Shutdown ROS
+        rclcpp::shutdown();
+        spinner.join(); 
+        return 0;
+    }
+
+  SendGripperGrip(client_ptr);
+
+
+  move_group_interface.attachObject(box_1.id, "gripper_link");
+  prompt("Press 'next' in the RvizVisualToolsGui window once the new object is attached to the robot");
+
+  
+  auto target_pose_2 = target_pose;
+  target_pose_2.position.x *= -1;
+  target_pose_2.position.y *= -1;
+
+
+  move_group_interface.setPoseTarget(target_pose_2);
+  prompt("Press 'Next' in the RvizVisualToolsGui window to plan");
+  draw_title("Planning");
+  moveit_visual_tools.trigger();
+  auto const [success_2, plan_2] = [&move_group_interface] {
+    moveit::planning_interface::MoveGroupInterface::Plan msg;
+    auto const ok = static_cast<bool>(move_group_interface.plan(msg));
+    return std::make_pair(ok, msg);
+  }();
+  // Execute the plan
+  if (success_2) {
+    draw_trajectory_tool_path(plan_2.trajectory_);
+    moveit_visual_tools.trigger();
+    prompt("Press 'Next' in the RvizVisualToolsGui window to execute");
+    draw_title("Executing");
+    moveit_visual_tools.trigger();
+    move_group_interface.execute(plan_2);
+  } else {
+    draw_title("Planning Failed!");
+    moveit_visual_tools.trigger();
+    RCLCPP_ERROR(logger, "Planning failed!");
+  }
+
+  move_group_interface.detachObject(box_1.id);
+  planning_scene_interface.removeCollisionObjects({box_1.id});
+
+  SendGripperrelease(client_ptr);
+
+  moveit_visual_tools.trigger();
+
+  // Shutdown ROS
+  rclcpp::shutdown();  // <--- This will cause the spin function in the thread to return
+  spinner.join();  // <--- Join the thread before exiting
+  return 0;
+}
+
+
+
+
+
+
+
+bool Grip(rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_ptr, bool grip) 
+{
+  auto goal = control_msgs::action::GripperCommand::Goal();
+  goal.command.position = grip ? 0.0 : 1.0;
+  goal.command.max_effort = 10000.0;
+  auto future = client_ptr->async_send_goal(goal);
+  
+  future.wait();
+
+  auto goal_handle = future.get();
+
+
+  auto result_future = client_ptr->async_get_result(goal_handle);
+
+  result_future.wait();
+
+  auto result = result_future.get().result;
+
+  return result->reached_goal;
+}
+
+
+bool SendGripperGrip(rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_ptr) 
+{
+  return Grip(client_ptr, true);
+}
+
+
+bool SendGripperrelease(rclcpp_action::Client<control_msgs::action::GripperCommand>::SharedPtr client_ptr) 
+{
+  return Grip(client_ptr, false);
+}
+
+
+
