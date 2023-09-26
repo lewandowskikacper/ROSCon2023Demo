@@ -81,6 +81,19 @@ def launch_setup(context, *args, **kwargs):
         [FindPackageShare(description_package), "config", ur_type, "visual_parameters.yaml"]
     )
 
+
+    robot_description_kinematics = PathJoinSubstitution(
+        [FindPackageShare(moveit_config_package), "config", "kinematics.yaml"]
+    )
+
+    robot_description_kinematics = load_yaml("ur_moveit_config", "config/kinematics.yaml")
+    kinematics_config = robot_description_kinematics["/**"]["ros__parameters"]
+    kinematics_config["robot_description_kinematics"][ur_namespace.perform(context) + "/ur_manipulator"] = kinematics_config["robot_description_kinematics"].pop("ur_manipulator")
+    robot_description_kinematics = kinematics_config
+
+
+    print("kinematics_params", kinematics_params)
+
     robot_description_content = Command(
         [
             PathJoinSubstitution([FindExecutable(name="xacro")]),
@@ -150,26 +163,19 @@ def launch_setup(context, *args, **kwargs):
     )
     robot_description_semantic = {"robot_description_semantic": robot_description_semantic_content}
 
-    robot_description_kinematics = PathJoinSubstitution(
-        [FindPackageShare(moveit_config_package), "config", "kinematics.yaml"]
-    )
-
-    robot_description_kinematics = load_yaml("ur_moveit_config", "config/kinematics.yaml")
-    kinematics_config = robot_description_kinematics["/**"]["ros__parameters"]
-    kinematics_config["robot_description_kinematics"][ur_namespace.perform(context) + "/ur_manipulator"] = kinematics_config["robot_description_kinematics"].pop("ur_manipulator")
-    robot_description_kinematics = kinematics_config
-
+    move_group_name = ur_namespace.perform(context) + "/move_group"
 
     # Planning Configuration
     ompl_planning_pipeline_config = {
-        "move_group": {
+        move_group_name: {
             "planning_plugin": "ompl_interface/OMPLPlanner",
             "request_adapters": """default_planner_request_adapters/AddTimeOptimalParameterization default_planner_request_adapters/FixWorkspaceBounds default_planner_request_adapters/FixStartStateBounds default_planner_request_adapters/FixStartStateCollision default_planner_request_adapters/FixStartStatePathConstraints""",
             "start_state_max_bounds_error": 0.1,
         }
     }
     ompl_planning_yaml = load_yaml("ur_moveit_config", "config/ompl_planning.yaml")
-    ompl_planning_pipeline_config["move_group"].update(ompl_planning_yaml)
+    ompl_planning_yaml[ur_namespace.perform(context) + "/ur_manipulator"] = ompl_planning_yaml.pop("ur_manipulator")
+    ompl_planning_pipeline_config[move_group_name].update(ompl_planning_yaml)
 
     # Trajectory Execution Configuration
     controllers_yaml = load_yaml("ur_moveit_config", "config/controllers.yaml")
@@ -267,21 +273,6 @@ def launch_setup(context, *args, **kwargs):
         ],
     )
 
-    # Servo node for realtime control
-    servo_yaml = load_yaml("ur_moveit_config", "config/ur_servo.yaml")
-    servo_params = {"moveit_servo": servo_yaml}
-    servo_node = Node(
-        package="moveit_servo",
-        condition=IfCondition(launch_servo),
-        executable="servo_node_main",
-        namespace=ur_namespace.perform(context),
-        parameters=[
-            servo_params,
-            robot_description,
-            robot_description_semantic,
-        ],
-        output="screen",
-    )
 
     nodes_to_start = [
         rviz_node,

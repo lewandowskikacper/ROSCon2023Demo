@@ -16,6 +16,8 @@
   <depend>vision_msgs</depend>
   <depend>ur_moveit_demo_msg</depend>
   <depend>moveit_core</depend>
+  <depend>ur_moveit_config</depend>
+
 
   <exec_depend>moveit_configs_utils</exec_depend>
   
